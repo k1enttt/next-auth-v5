@@ -2,8 +2,8 @@
 import { CardWrapper } from "@/components/auth/card-wrapper";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { startTransition, useTransition } from "react";
+import { set, z } from "zod";
+import { useTransition, useState } from "react";
 
 import { LoginSchema } from "@/schemas";
 import { Input } from "@/components/ui/input";
@@ -22,6 +22,8 @@ import { login } from "@/actions/login";
 
 export const LoginForm = () => {
   const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
 
   // 1. Khai báo form với kiểu dữ liệu từ LoginSchema
   const form = useForm<z.infer<typeof LoginSchema>>({
@@ -34,8 +36,15 @@ export const LoginForm = () => {
 
   // 2. Khai báo hàm handleSubmit
   const handleSubmit = (values: z.infer<typeof LoginSchema>) => {
+    setError("");
+    setSuccess("");
+
     startTransition(() => {
       login(values)
+        .then((res) => {
+        setError(res.error);
+        setSuccess(res.success);
+        })
     });
   };
 
@@ -85,8 +94,8 @@ export const LoginForm = () => {
             />
           </div>
 
-          <FormError message="" />
-          <FormSuccess message="" />
+          <FormError message={error} />
+          <FormSuccess message={success} />
 
           <Button 
           disabled={isPending}
