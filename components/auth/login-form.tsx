@@ -2,7 +2,7 @@
 import { CardWrapper } from "@/components/auth/card-wrapper";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { set, z } from "zod";
+import { z } from "zod";
 import { useTransition, useState } from "react";
 
 import { LoginSchema } from "@/schemas";
@@ -16,8 +16,8 @@ import {
   FormField,
   FormMessage,
 } from "@/components/ui/form";
-import { FormError } from "../form-error";
-import { FormSuccess } from "../form-success";
+import { FormError } from "@/components/form-error";
+import { FormSuccess } from "@/components/form-success";
 import { login } from "@/actions/login";
 
 export const LoginForm = () => {
