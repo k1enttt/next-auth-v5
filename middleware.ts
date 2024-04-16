@@ -6,7 +6,6 @@ import {
     apiAuthPrefix,
     DEFAULT_LOGIN_REDIRECT,
 } from "@/routes";
-
 const { auth } = NextAuth(authConfig);
  
 
@@ -24,8 +23,10 @@ export default auth((req) => {
     }
 
     // If the route is a public route and the user is logged in, redirect to the default login redirect.
-    if (isAuthRoute && isLoggedIn) {
-        return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+    if (isAuthRoute) {
+        if (isLoggedIn)
+            return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+        return;
     }
 
     // If the route is not a public route and the user is not logged in, redirect to the login page.
@@ -33,7 +34,7 @@ export default auth((req) => {
         return Response.redirect(new URL('/auth/login', nextUrl));
     }
 
-    return ;
+    return;
 });
 
 // Optionally, don't invoke Middleware on some paths

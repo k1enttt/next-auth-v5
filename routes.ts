@@ -1,13 +1,4 @@
 /**
- * Phân thành 3 nhóm Routes:
- * 1. Public routes: là những routes không cần authenticate (/)
- * 2. Auth route: là những routes authenticate (login, register)
- * 3. Api auth prefix: là prefix của api authen routes
- * 
- * Và một biến DEFAULT_LOGIN_REDIRECT = "/login"
- */
-
-/**
  * Array of routes that are accessible to the public.
  * These routes do not require authentication.
  * @type {string[]}
@@ -19,7 +10,7 @@ export const publicRoutes = ["/"];
  * These routes will redirect logged in users to the default login redirect.
  * @type {string[]}
  */
-export const authRoutes = ["/login", "/register"];
+export const authRoutes = ["/auth/login", "/auth/register"];
 
 /**
  * Prefix for API authentication routes.
