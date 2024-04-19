@@ -5,11 +5,17 @@ import { signIn } from "@/auth";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { AuthError } from "next-auth";
 
+interface LoginResponse {
+    success?: string;
+    error?: string;
+
+}
+
 export const login = async (values: z.infer<typeof LoginSchema>) => {
     const validateFields = LoginSchema.safeParse(values);
 
     if (!validateFields.success) {
-        return {error: "Invalid fields!"};
+        return {error: "Invalid fields!", success: ""};
     }
 
     const {email, password} = validateFields.data;
@@ -24,14 +30,14 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
         if (error instanceof AuthError) {
             switch (error.type) {
                 case "CredentialsSignin":
-                    return {error: "Invalid credentials!"};
+                    return {error: "Invalid credentials!", success: ""};
                 default:
-                    return {error: "An error occurred!"};
+                    return {error: "An error occurred!", success: ""};
             }
-        }
+        } 
         throw error;
     }
     
 
-    return {success: "Login success!"};
+    return {success: "Login success!", error: ""};
 };

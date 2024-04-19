@@ -19,7 +19,7 @@ export default {
                     const user = await getUserByEmail(email);
                     if (!user || !user.password) {
                         return null;
-                    }
+                    } // Người dùng không có mật khẩu khi login bằng Google hay GitHub
 
                     const passwordsMatch = await bcryptjs.compare(
                         password,

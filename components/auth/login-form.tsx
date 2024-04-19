@@ -42,8 +42,8 @@ export const LoginForm = () => {
     startTransition(() => {
       login(values)
         .then((res) => {
-        setError(res.error);
-        setSuccess(res.success);
+          setError(res.error ?? ""); // TODO: Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'error')
+          setSuccess(res.success ?? "");
         })
     });
   };
