@@ -8,6 +8,11 @@ generator client {
   provider = "prisma-client-js"
 }
 
+enum UserRole {
+  USER
+  ADMIN
+}
+
 // prisma/schema.prisma
 datasource db {
   provider  = "postgresql"
@@ -23,6 +28,7 @@ model User {
   emailVerified DateTime? @map("email_verified")
   image         String?
   password      String? 
+  role          UserRole  @default(USER)
   accounts      Account[]
  
   @@map("users")
