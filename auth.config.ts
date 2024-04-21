@@ -9,20 +9,6 @@ import bcryptjs from "bcryptjs";
 import { db } from "./lib/db";
 
 export default {
-    pages: {
-        signIn: "/auth/login",
-        error: "/auth/error",
-    },
-    events: {
-        async linkAccount({ user }) {
-            await db.user.update({
-                where: { id: user.id },
-                data: {
-                    emailVerified: new Date(),
-                },
-            });
-        },
-    },
     providers: [
         Google({
             clientId: process.env.GOOGLE_CLIENT_ID,
