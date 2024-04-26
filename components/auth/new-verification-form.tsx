@@ -29,7 +29,6 @@ export const NewVerificationForm = () => {
 
         newVerification(token)
             .then((data) => {
-                
                 if (data.error) setError(data.error);
                 if (data.success) setSuccess(data.success);
             })

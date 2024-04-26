@@ -20,16 +20,11 @@ import {
 import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
 import { login } from "@/actions/login";
-import Link from "next/link";
 
-export const LoginForm = () => {
+export const ResetForm = () => {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
-  const searchParams = useSearchParams();
-  const urlError = searchParams.get("error") === "OAuthAccountNotLinked"
-    ? "Email aready exists in other provider" 
-    : "";
 
   // 1. Khai báo form với kiểu dữ liệu từ LoginSchema
   const form = useForm<z.infer<typeof LoginSchema>>({
@@ -48,7 +43,7 @@ export const LoginForm = () => {
     startTransition(() => {
       login(values)
         .then((res) => {
-          setError(res.error ?? ""); // TODO: Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'error')
+          setError(res.error ?? "");
           setSuccess(res.success ?? "");
         })
     });
@@ -56,10 +51,9 @@ export const LoginForm = () => {
 
   return (
     <CardWrapper
-      headerLabel="Welcome back"
-      backButtonLabel="Dont have an account?"
-      backButtonHref="/auth/register"
-      showSocial
+      headerLabel="Forgot your password?"
+      backButtonLabel="Back to login"
+      backButtonHref="/auth/login"
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
@@ -82,43 +76,15 @@ export const LoginForm = () => {
                 </FormItem>
               )}
             />
-
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input 
-                    disabled={isPending}
-                    placeholder="********" {...field} type="password" />
-                  </FormControl>
-                   {/* FORGOT PASSWORD BUTTON */}
-                  <Button
-                  size={'sm'}
-                  variant={'link'}
-                  className="font-normal px-0"
-                  asChild
-                  >
-                    <Link href='/auth/reset'>
-                      Forgot password?
-                    </Link>
-                  </Button>
-                  
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
           </div>
 
-          <FormError message={error || urlError} />
+          <FormError message={error} />
           <FormSuccess message={success} />
 
           <Button 
           disabled={isPending}
           type="submit" className="w-full">
-            Login
+            Send reset email 
           </Button>
         </form>
       </Form>
