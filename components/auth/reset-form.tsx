@@ -4,9 +4,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useTransition, useState } from "react";
-import { useSearchParams } from "next/navigation";
 
-import { LoginSchema } from "@/schemas";
+import { ResetSchema } from "@/schemas";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,7 +18,7 @@ import {
 } from "@/components/ui/form";
 import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
-import { login } from "@/actions/login";
+import { reset } from "@/actions/reset";
 
 export const ResetForm = () => {
   const [isPending, startTransition] = useTransition();
@@ -27,21 +26,20 @@ export const ResetForm = () => {
   const [success, setSuccess] = useState<string | undefined>("");
 
   // 1. Khai báo form với kiểu dữ liệu từ LoginSchema
-  const form = useForm<z.infer<typeof LoginSchema>>({
-    resolver: zodResolver(LoginSchema),
+  const form = useForm<z.infer<typeof ResetSchema>>({
+    resolver: zodResolver(ResetSchema),
     defaultValues: {
       email: "",
-      password: "",
     },
   });
 
   // 2. Khai báo hàm handleSubmit
-  const handleSubmit = (values: z.infer<typeof LoginSchema>) => {
+  const handleSubmit = (value: z.infer<typeof ResetSchema>) => {
     setError("");
     setSuccess("");
 
     startTransition(() => {
-      login(values)
+      reset(value)
         .then((res) => {
           setError(res.error ?? "");
           setSuccess(res.success ?? "");

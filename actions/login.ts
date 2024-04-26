@@ -8,12 +8,6 @@ import { generateVerificationToken } from "@/lib/tokens";
 import { getUserByEmail } from "@/data/user";
 import { sendVerificationEmail } from "@/lib/mail";
 
-interface LoginResponse {
-    success?: string;
-    error?: string;
-
-}
-
 export const login = async (values: z.infer<typeof LoginSchema>) => {
     const validateFields = LoginSchema.safeParse(values);
 
