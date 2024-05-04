@@ -36,7 +36,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                     return false;
                 }
 
-                // TODO: Add 2FA check
+                // Two factor confirmation
                 if (existingUser.isTwoFacctorEnabled) {
                     const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(existingUser.id);
                     if (!twoFactorConfirmation)
@@ -48,7 +48,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                     });
                 }
             }
-
 
             return true;
         },

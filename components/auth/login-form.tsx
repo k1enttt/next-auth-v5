@@ -54,15 +54,15 @@ export const LoginForm = () => {
 
     startTransition(() => {
       login(values).then((res) => {
-        if (res.error) {
+        if (res?.error) {
           form.reset();
           setError(res.error);
         }
-        if (res.success) {
+        if (res?.success) {
           form.reset();
           setSuccess(res.success);
         }
-        if (res.twoFactor) {
+        if (res?.twoFactor) {
           setShowTwoFactor(true);
         }
       });
