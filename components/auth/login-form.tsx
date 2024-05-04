@@ -1,11 +1,17 @@
 "use client";
-import { CardWrapper } from "@/components/auth/card-wrapper";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useTransition, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
+import { CardWrapper } from "@/components/auth/card-wrapper";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema } from "@/schemas";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -20,7 +26,6 @@ import {
 import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
 import { login } from "@/actions/login";
-import Link from "next/link";
 
 export const LoginForm = () => {
   const [showTwoFactor, setShowTwoFactor] = useState(false);
@@ -83,11 +88,16 @@ export const LoginForm = () => {
                     <FormItem>
                       <FormLabel>Two Factor Code</FormLabel>
                       <FormControl>
-                        <Input
-                          disabled={isPending}
-                          placeholder="123456"
-                          {...field}
-                        />
+                        <InputOTP maxLength={6} {...field}>
+                          <InputOTPGroup>
+                            <InputOTPSlot index={0} />
+                            <InputOTPSlot index={1} />
+                            <InputOTPSlot index={2} />
+                            <InputOTPSlot index={3} />
+                            <InputOTPSlot index={4} />
+                            <InputOTPSlot index={5} />
+                          </InputOTPGroup>
+                        </InputOTP>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
