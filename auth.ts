@@ -37,7 +37,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                 }
 
                 // Two factor confirmation
-                if (existingUser.isTwoFacctorEnabled) {
+                if (existingUser.isTwoFactorEnabled) {
                     const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(existingUser.id);
                     if (!twoFactorConfirmation)
                         return false;
@@ -65,6 +65,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
             // User exists in the database when you log in
             token.role = existingUser.role;
+            token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
 
             return token;
         },
@@ -77,6 +78,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
             if (token.role && session.user) {
                 session.user.role = token.role as UserRole;
+            }
+
+            if (session.user) {
+                session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as Boolean;
             }
 
             console.log({

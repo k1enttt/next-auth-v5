@@ -6,7 +6,6 @@ import GitHub from "next-auth/providers/github";
 import { LoginSchema } from "@/schemas";
 import { getUserByEmail } from "./data/user";
 import bcryptjs from "bcryptjs";
-import { db } from "./lib/db";
 
 export default {
     providers: [
