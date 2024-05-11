@@ -10,12 +10,12 @@ const SettingPage = () => {
   };
   return (
     <div>
-      {/* <div>{JSON.stringify(user)}</div> */}
-
-      <button 
-        className="bg-white p-10 rounded-2xl"
-        onClick={onClick} 
-        type="submit">
+      {JSON.stringify(user)}
+      <button
+        className="bg-white p-6 rounded-2xl"
+        onClick={onClick}
+        type="submit"
+      >
         Sign out
       </button>
     </div>
