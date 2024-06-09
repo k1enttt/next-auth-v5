@@ -21,7 +21,6 @@ export const NewVerificationForm = () => {
         setError("");
         setSuccess("");
 
-        console.log(token);
         if (!token) {
             setError("Missing token");
             return;

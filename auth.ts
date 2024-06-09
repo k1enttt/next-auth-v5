@@ -5,6 +5,7 @@ import { db } from "./lib/db";
 import { getUserById } from "./data/user";
 import { UserRole } from "@prisma/client";
 import { getTwoFactorConfirmationByUserId } from "./data/two-factor-confirmation";
+import { getAccountByUserId } from "./data/account";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   pages: {
@@ -55,14 +56,17 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     // Ban đầu ta có JWT sau khi đăng nhập
     // JWT bao gồm các thông tin cơ bản của User
     async jwt({ token }) {
-      console.log({ token: token });
-
       // token.sub does not exit when you log out
       if (!token.sub) return token;
 
       //  User does not exist in the database when you sign up
       const existingUser = await getUserById(token.sub);
       if (!existingUser) return token;
+
+      const existingAccount = getAccountByUserId(
+        existingUser.id
+      );
+      token.isOAuth = !!existingAccount;
 
       // User exists in the database when you log in
       // Update username
@@ -93,6 +97,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         if (token.email) {
           session.user.email = token.email;
         }
+        session.user.isOAuth = token.isOAuth as Boolean;
       }
 
       console.log({
