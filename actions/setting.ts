@@ -25,6 +25,15 @@ export const settings = async (
     return {error: "Unauthorized"};
   }
 
+  // Nếu user đăng nhập bằng OAuth (Google hay GitHub) thì 
+  // không cho phép thay đổi email, password, new password, isTwoFactorEnabled
+  if (user.isOAuth) {
+    values.email = undefined;
+    values.password = undefined;
+    values.newPassword = undefined;
+    values.isTwoFactorEnabled = undefined;
+  }
+
   await db.user.update({
     where: { id: dbUser.id},
     data: {
