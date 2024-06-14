@@ -29,6 +29,12 @@ export const sendPasswordResetEmail = async (
     });
 }
 
+/**
+ * Send a verification email to the user
+ * @param email string
+ * @param token string
+ * @returns Promise<void>
+ */
 export const sendVerificationEmail = async (email: string, token: string) => {
     const confirmLink = `http://localhost:3000/auth/new-verification?token=${token}`;
 
