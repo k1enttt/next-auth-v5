@@ -22,7 +22,7 @@ export default function Home() {
         <p className="text-white text-lg">
           Đây là form login nè, nhớ làm cho nó đẹp đẹp nha, đừng để nó xấu xí
         </p>
-        <LoginButton>
+        <LoginButton mode="modal" asChild>
           <Button>  
             Sign in
           </Button>
