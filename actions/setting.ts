@@ -68,6 +68,7 @@ export const settings = async (
 
     const hashedPassword = await bcrypt.hash(values.newPassword, 10);
     values.password = hashedPassword;
+    values.newPassword = undefined;
   }
 
   await db.user.update({

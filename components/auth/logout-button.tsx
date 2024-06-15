@@ -6,7 +6,14 @@ children?: React.ReactNode,
 }
 
 export const LogoutButton = ({children}:LogoutButtonProps) => {
-  const onClick = () => logout();
+  const getCallbackUrl = () => {
+    const url = window.location.href;
+    const domain = window.location.origin;
+    const callbackUrl = url.replace(domain, '');
+    const encodedCallbackUrl = encodeURIComponent(callbackUrl);
+    return encodedCallbackUrl;
+  }
+  const onClick = () => logout(getCallbackUrl());
 
   return (
     <span onClick={onClick} className="cursor-pointer">

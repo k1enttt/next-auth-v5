@@ -1,7 +1,10 @@
 'use server';
 import { signOut } from "@/auth"
 
-export const logout = async () => {
+export const logout = async (
+    callbackUrl?: string
+) => {
     // Some server actions
-    await signOut({redirectTo: "/auth/login"});
+    const redirectUrl = callbackUrl ? `?callbackUrl=${callbackUrl}` : "";
+    await signOut({redirectTo: `/auth/login${redirectUrl}`});
 }
