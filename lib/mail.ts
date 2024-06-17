@@ -9,7 +9,7 @@ export const sendTwoFactorTokenEmail = async (
     token: string,
 ) => {
     await resend.emails.send({
-        from: 'onboarding@resend.dev',
+        from: 'mail@kienttt.site',
         to: email,
         subject: 'Two-factor authentication code',
         html: `<p>Your two-factor authentication code is: <strong>${token}</strong></p>`,
@@ -23,7 +23,7 @@ export const sendPasswordResetEmail = async (
     const resetLink = `${baseUrl}/auth/new-password?token=${token}`;
 
     await resend.emails.send({
-        from: 'onboarding@resend.dev',
+        from: 'mail@kienttt.site',
         to: email,
         subject: 'Reset your password',
         html: `<p>Click <a href='${resetLink}'>here</a> to reset password</p>`
