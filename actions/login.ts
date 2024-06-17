@@ -16,7 +16,7 @@ import { db } from "@/lib/db";
 
 export const login = async (
   values: z.infer<typeof LoginSchema>,
-  callbackUrl?: string
+  callbackUrl?: string | null,
 ) => {
   const validateFields = LoginSchema.safeParse(values);
 
